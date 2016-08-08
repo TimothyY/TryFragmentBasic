@@ -4,7 +4,10 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity implements UpperFragment.OnFragmentInteractionListener, LowerFragment.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements UpperFragment.OnFragmentInteractionListener{
+
+    UpperFragment upperFragment;
+    LowerFragment lowerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements UpperFragment.OnF
             }
 
             // Create a new Fragment to be placed in the activity layout
-            UpperFragment upperFragment = new UpperFragment();
+            upperFragment = new UpperFragment();
 
             // In case this activity was started with special instructions from an
             // Intent, pass the Intent's extras to the fragment as arguments
@@ -35,15 +38,16 @@ public class MainActivity extends AppCompatActivity implements UpperFragment.OnF
 
         if (findViewById(R.id.lowerContainer) != null) {
             if (savedInstanceState != null) {return;}
-            LowerFragment lowerFragment = new LowerFragment();
+            lowerFragment = new LowerFragment();
             lowerFragment.setArguments(getIntent().getExtras());
             getSupportFragmentManager().beginTransaction().add(R.id.lowerContainer, lowerFragment).commit();
         }
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    public void onFragmentInteraction(String sentence) {
+        if(lowerFragment!=null)
+            lowerFragment.updateSentence(sentence);
     }
 
 }
